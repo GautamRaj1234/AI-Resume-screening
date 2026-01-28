@@ -19,50 +19,46 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-
     if request.method == "POST":
+        try:
+            if "resume" not in request.files:
+                return redirect(url_for("index"))
 
-        if "resume" not in request.files:
-            return redirect(url_for("index"))
+            file = request.files["resume"]
+            if file.filename == "":
+                return redirect(url_for("index"))
 
-        file = request.files["resume"]
+            file_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
+            file.save(file_path)
 
-        if file.filename == "":
-            return redirect(url_for("index"))
+            raw_text = extract_text(file_path)
+            clean_text = preprocess(raw_text)
 
-        file_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
-        file.save(file_path)
+            found_skills = [s for s in SKILLS if s in clean_text]
+            missing_skills = [s for s in SKILLS if s not in found_skills]
 
-        raw_text = extract_text(file_path)
-        clean_text = preprocess(raw_text)
+            results = {}
+            for job, desc in JOBS.items():
+                score = calculate_similarity(clean_text, desc)
+                results[job] = score
 
-        found_skills = [skill for skill in SKILLS if skill in clean_text]
-        missing_skills = [skill for skill in SKILLS if skill not in found_skills]
+            best_job = max(results, key=results.get)
+            best_score = results[best_job]
 
-        results = {}
+            session["skills"] = found_skills
+            session["missing_skills"] = missing_skills
+            session["results"] = results
+            session["best_job"] = best_job
+            session["best_score"] = best_score
 
-        for job, desc in JOBS.items():
-            tfidf_score = calculate_similarity(clean_text, desc)
+            return redirect(url_for("result"))
 
-            job_skills = desc.split()
-            matched = len(set(found_skills).intersection(job_skills))
-            skill_score = (matched / len(job_skills)) * 100 if job_skills else 0
-
-            final_score = (0.7 * skill_score) + (0.3 * tfidf_score)
-            results[job] = round(final_score, 2)
-
-        best_job = max(results, key=results.get)
-        best_score = results[best_job]
-
-        session["skills"] = found_skills
-        session["missing_skills"] = missing_skills
-        session["results"] = results
-        session["best_job"] = best_job
-        session["best_score"] = best_score
-
-        return redirect(url_for("result"))
+        except Exception as e:
+            print("APP ERROR:", e)
+            return "Internal Server Error", 500
 
     return render_template("index.html")
+
 
 
 @app.route("/result")
