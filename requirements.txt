@@ -1,5 +1,7 @@
-Flask
+flask
+gunicorn
 pdfplumber
 python-docx
 nltk
 scikit-learn
+
