@@ -13,8 +13,9 @@ app = Flask(__name__)
 app.secret_key = "resume_ai_secret"
 
 UPLOAD_FOLDER = "uploads"
-os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
 
 @app.route("/", methods=["GET", "POST"])
 def index():
