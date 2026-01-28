@@ -8,15 +8,11 @@ nltk_data_dir = "/tmp/nltk_data"
 os.makedirs(nltk_data_dir, exist_ok=True)
 nltk.data.path.append(nltk_data_dir)
 
-try:
-    nltk.data.find("tokenizers/punkt")
-except LookupError:
-    nltk.download("punkt", download_dir=nltk_data_dir)
-
-try:
-    nltk.data.find("corpora/stopwords")
-except LookupError:
-    nltk.download("stopwords", download_dir=nltk_data_dir)
+for resource in ["punkt", "stopwords", "wordnet", "omw-1.4"]:
+    try:
+        nltk.data.find(resource)
+    except LookupError:
+        nltk.download(resource, download_dir=nltk_data_dir)
 
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
