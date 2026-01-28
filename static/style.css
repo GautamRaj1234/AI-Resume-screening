@@ -1,0 +1,237 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #667eea, #764ba2, #6a11cb);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+
+.container {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    padding: 35px;
+    width: 480px;
+    border-radius: 18px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    animation: fadeIn 0.8s ease;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+h3 {
+    margin-top: 25px;
+    color: #444;
+}
+
+p {
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+}
+
+.container {
+    max-width: 460px;
+}
+
+input[type="file"] {
+    margin: 20px 0;
+}
+
+button {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(102,126,234,0.6);
+}
+a {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    text-decoration: none;
+    font-weight: 500;
+    color: #667eea;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+.result-box {
+    text-align: left;
+    margin-top: 20px;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+.score {
+    font-weight: bold;
+    color: #4CAF50;
+}
+.skill-found {
+    color: green;
+    font-weight: bold;
+}
+
+.skill-missing {
+    color: red;
+    font-weight: bold;
+}
+.progress-container {
+    background: #eee;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 6px 0 14px 0;
+}
+
+.progress-bar {
+    height: 18px;
+    background: linear-gradient(to right, #4CAF50, #81C784);
+    width: 0%;
+    text-align: right;
+    padding-right: 6px;
+    color: white;
+    font-size: 12px;
+    line-height: 18px;
+    border-radius: 20px;
+    transition: width 1.2s ease-in-out;
+}
+
+.best-job {
+    background: linear-gradient(to right, #e8f5e9, #d4fc79);
+    border-left: 6px solid #4CAF50;
+    padding: 14px;
+    margin-bottom: 22px;
+    border-radius: 12px;
+    font-weight: bold;
+    text-align: center;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { box-shadow: 0 0 5px #4CAF50; }
+    to { box-shadow: 0 0 15px #4CAF50; }
+}
+
+.hidden {
+    display: none;
+}
+
+.loader {
+    margin-top: 20px;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 5px solid #ddd;
+    border-top: 5px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.section-card {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 18px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+}
+.skill-chip {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 6px 6px 0 0;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.skill-good {
+    background: #e6f9ed;
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
+}
+
+.skill-missing {
+    background: #fdecea;
+    color: #c62828;
+    border: 1px solid #c62828;
+}
+.job-card {
+    background: white;
+    padding: 14px;
+    border-radius: 14px;
+    margin-top: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+}
+
+.job-card:hover {
+    transform: translateY(-4px);
+}
+.top-badge {
+    background: gold;
+    color: black;
+    padding: 4px 10px;
+    border-radius: 14px;
+    font-size: 12px;
+    font-weight: bold;
+    margin-left: 8px;
+}
+.section-card {
+    animation: slideUp 0.6s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
