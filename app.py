@@ -20,13 +20,17 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/", methods=["GET", "POST"])
 def index():
 
-    found_skills = []
-    missing_skills = []
-    results = {}
-
     if request.method == "POST":
+
+        if "resume" not in request.files:
+            return redirect(url_for("index"))
+
         file = request.files["resume"]
-        file_path = os.path.join(UPLOAD_FOLDER, file.filename)
+
+        if file.filename == "":
+            return redirect(url_for("index"))
+
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], file.filename)
         file.save(file_path)
 
         raw_text = extract_text(file_path)
@@ -38,23 +42,17 @@ def index():
         results = {}
 
         for job, desc in JOBS.items():
-    
             tfidf_score = calculate_similarity(clean_text, desc)
 
-            # skill match percentage
             job_skills = desc.split()
             matched = len(set(found_skills).intersection(job_skills))
             skill_score = (matched / len(job_skills)) * 100 if job_skills else 0
 
-            # weighted final score
             final_score = (0.7 * skill_score) + (0.3 * tfidf_score)
-
             results[job] = round(final_score, 2)
-
 
         best_job = max(results, key=results.get)
         best_score = results[best_job]
-
 
         session["skills"] = found_skills
         session["missing_skills"] = missing_skills
@@ -64,8 +62,8 @@ def index():
 
         return redirect(url_for("result"))
 
-
     return render_template("index.html")
+
 
 @app.route("/result")
 def result():
